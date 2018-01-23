@@ -32,8 +32,21 @@
   :prefix "info-beamer"
   :group 'tools)
 
-(defcustom info-beamer-udp-remote [127 0 0 1 4444]
-  "Info beamer UDP remote."
+(defcustom info-beamer-binary-path "info-beamer"
+  "Path to the info-beamer executable."
+  :type 'file
+  :group 'info-beamer)
+
+(defcustom info-beamer-udp-host "127.0.0.1"
+  "Info beamer UDP host."
+  :type 'string
+  :safe #'stringp
+  :group 'info-beamer)
+
+(defcustom info-beamer-udp-port 4444
+  "Info beamer UDP port."
+  :type 'integer
+  :safe #'integerp
   :group 'info-beamer)
 
 (defvar info-beamer-network-process nil)
@@ -47,9 +60,11 @@
   (if (and info-beamer-network-process (process-live-p info-beamer-network-process))
       info-beamer-network-process
     (setq info-beamer-network-process
-          (make-network-process :name "info-beamer-udp-socket"
-                                :remote '[127 0 0 1 4444]
-                                :type 'datagram))))
+          (make-network-process
+           :name "info-beamer-udp-socket"
+           :host info-beamer-udp-host
+           :service info-beamer-udp-port
+           :type 'datagram))))
 
 ;;;###autoload
 (defun info-beamer-send-string (data &optional path)
@@ -59,6 +74,17 @@
          (path (or path (info-beamer-get-current-node)))
          (str (format "%s:%s" path data)))
     (process-send-string process str)))
+
+;;;###autoload
+(defun info-beamer-run (&optional node)
+  "Run info-beamer NODE or current directory."
+  (interactive)
+  (let* ((path (or node "."))
+         (command (format "%s %s" info-beamer-binary-path path))
+         (buf-name (format "info-beamer %s%s"
+                           (info-beamer-get-current-node)
+                           (if node (format "/%s" node) ""))))
+    (compilation-start command nil (lambda (m) buf-name))))
 
 (provide 'info-beamer)
 ;;; info-beamer.el ends here
