@@ -27,6 +27,8 @@
 
 ;;; Code:
 
+(require 'thingatpt)
+
 (defgroup info-beamer nil
   "info-beamer"
   :prefix "info-beamer"
@@ -152,6 +154,15 @@ If NODE is NIL use current directory."
                            (info-beamer-get-current-node)
                            (if node (format "/%s" node) ""))))
     (compilation-start command nil (lambda (_mode) buf-name))))
+
+;;;###autoload
+(defun info-beamer-doc (&optional anchor)
+  "Open info-beamer documentation for ANCHOR or symbol under cursor."
+  (interactive)
+  (let* ((symbol (or anchor (thing-at-point 'filename)))
+         (anchor (if symbol (concat "#" symbol) ""))
+         (url (format "https://info-beamer.com/doc/info-beamer%s" anchor)))
+    (browse-url url)))
 
 (provide 'info-beamer)
 ;;; info-beamer.el ends here
