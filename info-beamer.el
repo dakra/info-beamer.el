@@ -115,7 +115,6 @@
   (let ((node (or node (info-beamer-get-current-node))))
     (info-beamer-input node)))
 
-;;;###autoload
 (defun info-beamer-input (line)
   "Send LINE via TCP to info-beamer."
   (interactive "sSend line to info beamer: ")
