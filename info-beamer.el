@@ -58,8 +58,21 @@
   :type 'integer
   :safe #'integerp)
 
-(defvar info-beamer-udp-process nil)
-(defvar info-beamer-tcp-process nil)
+(defvar info-beamer-udp-process nil
+  "UDP process to the info-beamer.")
+
+(defvar info-beamer-tcp-process nil
+  "TCP process to the info-beamer.")
+
+(defvar info-beamer-data-history nil
+  "Input history for `info-beamer-data'.")
+
+(defvar info-beamer-input-history nil
+  "Input history for `info-beamer-input'.")
+
+(defvar info-beamer-osc-history nil
+  "Input history for `info-beamer-osc'.")
+
 
 (defun info-beamer-get-current-node ()
   "Return current directory."
@@ -112,7 +125,9 @@
 
 (defun info-beamer-input (line)
   "Send LINE via TCP to info-beamer."
-  (interactive "sSend line to info beamer: ")
+  (interactive
+   (list (read-from-minibuffer
+          "Send line to info beamer: " nil nil nil 'info-beamer-input-history)))
   (let ((process (info-beamer-get-tcp-process)))
     (process-send-string process (concat line "\n"))))
 
@@ -120,7 +135,9 @@
 (defun info-beamer-data (data &optional node)
   "Send DATA via UDP to info-beamer NODE.
 If NODE is NIL use current directory."
-  (interactive "sSend data to info beamer: ")
+  (interactive
+   (list (read-from-minibuffer
+          "Send data to info beamer: " nil nil nil 'info-beamer-data-history)))
   (let* ((process (info-beamer-get-udp-process))
          (node (or node (info-beamer-get-current-node)))
          (path (format "%s:%s" node data)))
@@ -129,7 +146,9 @@ If NODE is NIL use current directory."
 ;;;###autoload
 (defun info-beamer-osc (suffix &optional node &rest args)
   "Send OSC packet with ARGS to path /NODE/SUFFIX."
-  (interactive "sSend OSC packet to path: ")
+  (interactive
+   (list (read-from-minibuffer
+          "Send OSC packet to path: " nil nil nil 'info-beamer-osc-history)))
   (if (require 'osc nil t)
       (let* ((process (info-beamer-get-udp-process))
              (node (or node (info-beamer-get-current-node)))
