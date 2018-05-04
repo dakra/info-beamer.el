@@ -36,32 +36,27 @@
 
 (defcustom info-beamer-binary-path "info-beamer"
   "Path to the info-beamer executable."
-  :type 'file
-  :group 'info-beamer)
+  :type 'file)
 
 (defcustom info-beamer-udp-host "127.0.0.1"
   "Info beamer UDP host."
   :type 'string
-  :safe #'stringp
-  :group 'info-beamer)
+  :safe #'stringp)
 
 (defcustom info-beamer-udp-port 4444
   "Info beamer UDP port."
   :type 'integer
-  :safe #'integerp
-  :group 'info-beamer)
+  :safe #'integerp)
 
 (defcustom info-beamer-tcp-host "127.0.0.1"
   "Info beamer TCP host."
   :type 'string
-  :safe #'stringp
-  :group 'info-beamer)
+  :safe #'stringp)
 
 (defcustom info-beamer-tcp-port 4444
   "Info beamer TCP port."
   :type 'integer
-  :safe #'integerp
-  :group 'info-beamer)
+  :safe #'integerp)
 
 (defvar info-beamer-udp-process nil)
 (defvar info-beamer-tcp-process nil)
