@@ -23,11 +23,19 @@
 
 ;;; Commentary:
 
-;; Send data to your info-beamer node
+;; Utilities for working with info-beamer
+;;
+;; Run your info-beamer node
+;; Lookup documentation
+;; Send data to your info-beamer node via TCP/UDP/OSC
 
 ;;; Code:
 
+(require 'easymenu)
 (require 'thingatpt)
+
+
+;;; Customization
 
 (defgroup info-beamer nil
   "info-beamer"
@@ -37,6 +45,10 @@
 (defcustom info-beamer-binary-path "info-beamer"
   "Path to the info-beamer executable."
   :type 'file)
+
+(defcustom info-beamer-keymap-prefix (kbd "C-c '")
+  "Info-beamer keymap prefix."
+  :type 'key-sequence)
 
 (defcustom info-beamer-udp-host "127.0.0.1"
   "Info beamer UDP host."
@@ -58,6 +70,9 @@
   :type 'integer
   :safe #'integerp)
 
+
+;;; Variables
+
 (defvar info-beamer-udp-process nil
   "UDP process to the info-beamer.")
 
@@ -73,6 +88,8 @@
 (defvar info-beamer-osc-history nil
   "Input history for `info-beamer-osc'.")
 
+
+;;; Functions
 
 (defun info-beamer-get-current-node ()
   "Return current directory."
@@ -176,6 +193,55 @@ If NODE is NIL use current directory."
          (anchor (if symbol (concat "#" symbol) ""))
          (url (format "https://info-beamer.com/doc/info-beamer%s" anchor)))
     (browse-url url)))
+
+
+;;; info-beamer-mode
+
+(defvar info-beamer-command-map
+  (let ((map (make-sparse-keymap)))
+    (define-key map (kbd "r") 'info-beamer-run)
+
+    (define-key map (kbd "h") 'info-beamer-doc)
+    (define-key map (kbd "?") 'info-beamer-doc)
+
+    (define-key map (kbd "c") 'info-beamer-connect)
+    (define-key map (kbd "t") 'info-beamer-input)
+    (define-key map (kbd "i") 'info-beamer-input)
+
+    (define-key map (kbd "u") 'info-beamer-data)
+    (define-key map (kbd "d") 'info-beamer-data)
+
+    (define-key map (kbd "o") 'info-beamer-osc)
+    map))
+
+(defvar info-beamer-mode-map
+  (let ((map (make-sparse-keymap)))
+    (define-key map info-beamer-keymap-prefix info-beamer-command-map)
+    map))
+
+(easy-menu-define info-beamer-mode-menu info-beamer-mode-map
+  "Menu for working with info-beamer nodes."
+  '("Info-Beamer"
+    ["Run" info-beamer-run
+     :help "Run current directory as info-beamer node"]
+    ["Lookup documentation" info-beamer-doc
+     :help "Open info-beamer documentation for the current word in a browser."]
+    ["Connect" info-beamer-connect
+     :help "Connect to an info-beamer node."]
+    ["Send TCP input line" info-beamer-input
+     :help "Send a line via TCP to an info-beamer node."]
+    ["Send UDP data" info-beamer-data
+     :help "Send data via UDP to an info-beamer node."]
+    ["Send OSC (open sound control) packet" info-beamer-osc
+     :help "Send OSC (open sound control) packet to an info-beamer node."]))
+
+;;;###autoload
+(define-minor-mode info-beamer-mode
+  "Minor mode to interact with info-beamer nodes.
+
+\\{info-beamer-mode-map}"
+  :lighter " info-beamer"
+  :keymap info-beamer-mode-map)
 
 (provide 'info-beamer)
 ;;; info-beamer.el ends here
