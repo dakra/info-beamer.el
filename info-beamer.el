@@ -199,6 +199,7 @@ If NODE is NIL use current directory."
 
 (defvar info-beamer-command-map
   (let ((map (make-sparse-keymap)))
+    (define-key map (kbd "!") 'info-beamer-run)
     (define-key map (kbd "r") 'info-beamer-run)
 
     (define-key map (kbd "h") 'info-beamer-doc)
