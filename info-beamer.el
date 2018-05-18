@@ -180,7 +180,7 @@ If NODE is NIL use current directory."
   (interactive)
   (let* ((path (or node "."))
          (command (format "%s %s" info-beamer-binary-path path))
-         (buf-name (format "info-beamer %s%s"
+         (buf-name (format "*info-beamer %s%s*"
                            (info-beamer-get-current-node)
                            (if node (format "/%s" node) ""))))
     (compilation-start command nil (lambda (_mode) buf-name))))
