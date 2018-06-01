@@ -4,7 +4,7 @@
 
 ;; Author: Daniel Kraus <daniel@kraus.my>
 ;; Version: 0.1
-;; Package-Requires: ((osc "0.1") (emacs "24.4"))
+;; Package-Requires: ((emacs "24.4"))
 ;; Keywords: tools, processes, comm
 ;; URL: https://github.com/dakra/info-beamer.el
 
@@ -28,6 +28,9 @@
 ;; Run your info-beamer node
 ;; Lookup documentation
 ;; Send data to your info-beamer node via TCP/UDP/OSC
+;;
+;; Install the osc package (available from gnu elpa) if you
+;; want to send OSC messages to your node.
 
 ;;; Code:
 
