@@ -1,4 +1,4 @@
-;;; info-beamer.el --- Send commands to info-beamer         -*- lexical-binding: t; -*-
+;;; info-beamer.el --- Utilities for working with info-beamer  -*- lexical-binding: t; -*-
 
 ;; Copyright (C) 2018  Daniel Kraus
 
