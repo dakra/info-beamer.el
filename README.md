@@ -1,5 +1,9 @@
 # Emacs minor mode for info-beamer
 
+[![Melpa](https://melpa.org/packages/info-beamer-badge.svg)](https://melpa.org/#/info-beamer)
+[![Melpa Stable](https://stable.melpa.org/packages/info-beamer-badge.svg)](https://stable.melpa.org/#/info-beamer)
+[![GPLv3 license](https://img.shields.io/badge/License-GPLv3-blue.svg)](http://perso.crans.org/besson/LICENSE.html)
+
 This package provides utilities for working with [info-beamer](https://info-beamer.com/opensource).
 
 ## Features
