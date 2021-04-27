@@ -1,12 +1,13 @@
 ;;; info-beamer.el --- Utilities for working with info-beamer  -*- lexical-binding: t; -*-
 
-;; Copyright (C) 2018  Daniel Kraus
+;; Copyright (C) 2018-2021  Daniel Kraus
 
 ;; Author: Daniel Kraus <daniel@kraus.my>
 ;; Version: 0.1
 ;; Package-Requires: ((emacs "24.4"))
 ;; Keywords: tools, processes, comm
 ;; URL: https://github.com/dakra/info-beamer.el
+;; SPDX-License-Identifier: GPL-3.0-or-later
 
 ;; This program is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
